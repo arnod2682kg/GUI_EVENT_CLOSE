@@ -1,0 +1,28 @@
+  ;--connecting and sending Req to Host
+    For $i = 1 To UBound($mainarray) -1
+        If $mainarray[$i][3] <> "" Then
+            If $mainarray[$i][2] = "" Then
+
+                IF $FUseProxy Then
+                    ;
+                    $forward = _Get_Address($mainarray[$i][3])
+                    $forward = $mainarray[$i][3] ;????? ????? ???????? ?????? ?? ??????
+                    _save("]" & $i &" ?????????? ?????? ?? ?????? : " & $forward  & @CRLF)
+                    ;
+                Else
+                    ;
+                    $forward = _Get_Address($mainarray[$i][3]) ;????? ????? ???????? ?????? ?? ??????
+                    _save("]" & $i &" Got Host Address : " & $forward  & @CRLF)
+                    ;
+                EndIf
+
+                $mainarray[$i][6] = 0
+                $mainarray[$i][4] = $forward
+                If $forward = "0" Then
+                    _Send_Response($mainarray[$i][1],400)
+                    _save("]" & $i &" Host is 0 , Error 400" & @CRLF)
+                Else
+                        IF $FUseProxy Then
+                            ;
+                            $serverip   = GUICtrlRead($PF_IP)
+                            $mainarray[$i][0]=GUICtrlRead($PF_Port)
